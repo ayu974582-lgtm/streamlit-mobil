@@ -12,10 +12,10 @@ mpg = st.number_input('Input Konsumsi BBM Mobil', value=30.20)
 engineSize = st.number_input('Input Engine Size', value=2.0)
 
 def format_koma(angka):
-    return f"{float(nilai_or_angka(angka)):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"{float(angka):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
-def nilai_or_angka(angka):
-    return float(angka)
+def format_rupiah(angka):
+    return f"Rp {format_koma(angka)}"
 
 nilai_ponds = 0.0
 nilai_idr = 0.0
@@ -29,4 +29,4 @@ st.write('Estimasi harga mobil bekas dalam Ponds :')
 st.metric(label="value", value=format_koma(nilai_ponds))
 
 st.write('Estimasi harga mobil bekas dalam IDR (Juta) :')
-st.metric(label="value", value=format_koma(nilai_idr))
+st.metric(label="value", value=format_rupiah(nilai_idr))
