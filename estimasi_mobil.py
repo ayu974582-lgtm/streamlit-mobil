@@ -11,13 +11,22 @@ tax = st.number_input('Input Pajak Mobil', value=145.0)
 mpg = st.number_input('Input Konsumsi BBM Mobil', value=30.20)
 engineSize = st.number_input('Input Engine Size', value=2.0)
 
-st.write('Estimasi harga mobil bekas dalam Ponds :')
+def format_koma(angka):
+    return f"{float(nilai_or_angka(angka)):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+def nilai_or_angka(angka):
+    return float(angka)
+
+nilai_ponds = 0.0
+nilai_idr = 0.0
+
 if st.button('Estimasi Harga'):
     predict = model.predict([[year, mileage, tax, mpg, engineSize]])
-    st.write(predict)
-    st.write('Estimasi harga mobil bekas dalam IDR (Juta) :')
-    st.write(predict * 19000)
-else:
-    st.write(0)
-    st.write('Estimasi harga mobil bekas dalam IDR (Juta) :')
-    st.write(0)
+    nilai_ponds = float(predict[0])
+    nilai_idr = nilai_ponds * 19000
+
+st.write('Estimasi harga mobil bekas dalam Ponds :')
+st.metric(label="value", value=format_koma(nilai_ponds))
+
+st.write('Estimasi harga mobil bekas dalam IDR (Juta) :')
+st.metric(label="value", value=format_koma(nilai_idr))
